@@ -14,12 +14,14 @@ public class GameScreen extends ScreenAdapter{
     
     private int x;
     private int y;
+    World world;
     
     public GameScreen(CramTheBookGame cramTheBookGame) {
         this.cramTheBookGame = cramTheBookGame;
         playerImg =  new Texture("boy.png");
         
-        player = new Player(100,100);
+        world = new World(cramTheBookGame);
+        player = world.getPlayer();
     }
     
     @Override
