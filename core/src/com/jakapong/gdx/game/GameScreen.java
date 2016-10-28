@@ -5,10 +5,12 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 public class GameScreen extends ScreenAdapter{
 
     private CramTheBookGame cramTheBookGame;
     private Texture playerImg;
+    private Player player;
     
     private int x;
     private int y;
@@ -16,8 +18,8 @@ public class GameScreen extends ScreenAdapter{
     public GameScreen(CramTheBookGame cramTheBookGame) {
         this.cramTheBookGame = cramTheBookGame;
         playerImg =  new Texture("boy.png");
-        x = 100;
-        y = 100;
+        
+        player = new Player(100,100);
     }
     
     @Override
@@ -27,15 +29,22 @@ public class GameScreen extends ScreenAdapter{
     	update(delta);
     	SpriteBatch batch = cramTheBookGame.batch;
 		batch.begin();
-		batch.draw(playerImg,x,y);
+		Vector2 pos = player.getPosition();
+		batch.draw(playerImg,pos.x,pos.y);
 		batch.end();
     }
     private void update(float delta){
-       	if(Gdx.input.isKeyPressed(Keys.LEFT)){
-       		x -= 5;
+    	if(Gdx.input.isKeyPressed(Keys.UP)){
+       		player.move(player.DIRECTION_UP);
        	}
-       	if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-       		x += 5;
+    	if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+    		player.move(player.DIRECTION_RIGHT);
+       	}
+    	if(Gdx.input.isKeyPressed(Keys.LEFT)){
+    		player.move(player.DIRECTION_LEFT);
+       	}
+       	if(Gdx.input.isKeyPressed(Keys.DOWN)){
+       		player.move(player.DIRECTION_DOWN);
        	}
     }
 }
